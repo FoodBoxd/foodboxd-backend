@@ -1,0 +1,6 @@
+@foodboxd_backend_HostAddress = http://localhost:5064
+
+GET {{foodboxd_backend_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
