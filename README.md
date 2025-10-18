@@ -21,6 +21,15 @@ Para rodar o back, você precisa ter
 2.  **Servidor MySQL** (MySQL Workbench como conhecemos com servidor rodando).
 3.  A ferramenta de linha de comando do EF Core: `dotnet tool install --global dotnet-ef` (se ainda não estiver instalada).
 
+### Clone o repo
+
+Clone o repositório para utilizar o projeto.
+
+```bash
+git clone https://github.com/FoodBoxd/foodboxd-backend.git
+cd foodboxd-backend
+```
+
 ## ⚙️ Configuração do Banco de Dados
 
 ### 1 String de Conexão
