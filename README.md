@@ -37,12 +37,10 @@ cd foodboxd-backend
 O projeto usa a abordagem **Code First** do EF Core e se conecta a um banco de dados MySQL chamado **`foodboxd`**.
 Isso significa que você **NUNCA DEVE FAZER ALTERAÇÔES DE ESTRUTURA DIRETAMENTE NO MYSQL WORKBENCH**.
 
-Você deve configurar sua string de conexão no arquivo **`appsettings.Development.json`**. Altere o valor de `Password` para a senha do seu usuário `root` (ou o que você configurou no servidor do MySQL):
+Você deve criar um arquivo **`.env`** na pasta raiz do projeto. Adicione no arquivo sua string de conexão seguindo o modelo. Altere o valor de e `Password` para a senha do seu usuário `root` (ou o que você configurou no servidor do MySQL):
 
 ```json
-"ConnectionStrings": {
-  "AppDbConnectionString": "server=localhost; database=foodboxd; User=root; Password=SENHA"
-}
+ConnectionStrings__AppDbConnectionString="server=localhost;database=foodboxd;User=root;Password=SUA_SENHA_ROOT"
 ```
 
 ### 2 Migrações para o banco

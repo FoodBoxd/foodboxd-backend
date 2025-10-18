@@ -1,6 +1,9 @@
 using foodboxd_backend.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using DotNetEnv;
+
+Env.Load(); // Carrega as variáveis de ambiente do arquivo .env
 
 const string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
