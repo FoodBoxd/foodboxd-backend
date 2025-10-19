@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DotNetEnv;
 
-Env.Load(); // Carrega as variáveis de ambiente do arquivo .env
+Env.Load();
 
 const string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
