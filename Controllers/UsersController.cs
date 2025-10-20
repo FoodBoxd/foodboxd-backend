@@ -33,20 +33,11 @@ namespace foodboxd_backend.Controllers
             return Ok(users);
         }
 
-        // POST: api/users - Cria um novo usuário
-        [HttpPost]
-        public async Task<IActionResult> AddUser(User user)
-        {
-            _appDbContext.Users.Add(user);
-            await _appDbContext.SaveChangesAsync();
-            return Ok(user);
-        }
-
         // POST: api/users/login - Faz login
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
-            var user = await _appDbContext.Users.FirstOrDefaultAsync(u => 
+            var user = await _appDbContext.Users.FirstOrDefaultAsync(u =>
                 u.Email == request.Email && u.Password == request.Password);
 
             if (user == null)
@@ -59,7 +50,7 @@ namespace foodboxd_backend.Controllers
                 message = "Login realizado com sucesso",
                 user = new
                 {
-                    userId = user.UserId,
+                    user_id = user.UserId,
                     name = user.Name,
                     email = user.Email
                 }
@@ -67,7 +58,7 @@ namespace foodboxd_backend.Controllers
         }
 
         // POST: api/users/register - Cadastra um novo usuário
-        [HttpPost("register")]
+        [HttpPost("create")]
         public async Task<IActionResult> Register([FromBody] RegisterRequest request)
         {
             var existingUser = await _appDbContext.Users.FirstOrDefaultAsync(u => u.Email == request.Email);
@@ -92,7 +83,7 @@ namespace foodboxd_backend.Controllers
                 message = "Usuário cadastrado com sucesso",
                 user = new
                 {
-                    userId = newUser.UserId,
+                    user_id = newUser.UserId,
                     name = newUser.Name,
                     email = newUser.Email
                 }
