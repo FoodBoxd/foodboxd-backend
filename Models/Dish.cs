@@ -14,7 +14,7 @@ namespace foodboxd_backend.Models
         [Required]
         public string Description { get; set; }
         [Required]
-        public byte[] Photo { get; set; }
+        public string Photo { get; set; }
 
         public Recipe Recipe { get; set; }
         public ICollection<Publication> Publications { get; set; }

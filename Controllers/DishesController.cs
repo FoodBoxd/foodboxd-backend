@@ -118,14 +118,14 @@ namespace foodboxd_backend.Controllers
         {
             public string Name { get; set; }
             public string Description { get; set; }
-            public byte[] Photo { get; set; }
+            public string Photo { get; set; }
         }
 
         public class UpdateDishRequest
         {
             public string Name { get; set; }
             public string Description { get; set; }
-            public byte[] Photo{ get; set; }
+            public string Photo{ get; set; }
         }
     }    
 

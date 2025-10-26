@@ -13,32 +13,6 @@ namespace foodboxd_backend.Data
             SeedDishesRecipes(modelBuilder);
         }
 
-        // Função auxiliar para ler um arquivo de imagem e retorna seus bytes (para armazenar no banco)
-        private static byte[] ReadImageFile(string fileName)
-        {
-            string imagePath = Path.Combine("Data", "SeedImages", fileName);
-
-            try
-            {
-                if (File.Exists(imagePath))
-                {
-                    return File.ReadAllBytes(imagePath);
-                }
-
-                // Caminho alternativo (fallback) para o 'dotnet ef'
-                string altPath = Path.Combine(AppContext.BaseDirectory, imagePath);
-                if (File.Exists(altPath))
-                {
-                    return File.ReadAllBytes(altPath);
-                }
-            }
-            catch
-            {
-                // Retorna vazio se der erro ou não encontrar
-            }
-            return Array.Empty<byte>();
-        }
-
         // Função para popular Ingredients
         private static void SeedIngredients(ModelBuilder modelBuilder)
         {
@@ -89,16 +63,16 @@ namespace foodboxd_backend.Data
         private static void SeedDishesRecipes(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Dish>().HasData(
-                new Dish { DishId = 1, Name = "Pizza Marguerita", Description = "A Pizza Marguerita é um clássico napolitano, famosa por seus ingredientes simples e frescos que representam as cores da bandeira italiana.", Photo = ReadImageFile("pizza_marguerita.png") },
-                new Dish { DishId = 2, Name = "Spaghetti Carbonara", Description = "Um prato de massa italiano de Roma, feito com ovos, queijo duro, carne de porco curada e pimenta preta.", Photo = ReadImageFile("spaghetti_carbonara.png") },
-                new Dish { DishId = 3, Name = "Lasanha à Bolonhesa", Description = "Camadas de massa com molho à bolonhesa, molho branco e queijo, assadas à perfeição.", Photo = ReadImageFile("lasanha_bolonhesa.png") },
-                new Dish { DishId = 4, Name = "Hambúrguer Clássico", Description = "Um suculento hambúrguer de carne com queijo, alface, tomate em um pão macio.", Photo = ReadImageFile("hamburguer_classico.png") },
-                new Dish { DishId = 5, Name = "Frango à Parmegiana", Description = "Peito de frango empanado, coberto com molho de tomate e queijo muçarela derretido.", Photo = ReadImageFile("frango_parmegiana.png") },
-                new Dish { DishId = 6, Name = "Risoto de Cogumelos", Description = "Arroz cremoso cozido lentamente com cogumelos frescos, queijo parmesão e um toque de vinho branco.", Photo = ReadImageFile("risoto_cogumelos.png") },
-                new Dish { DishId = 7, Name = "Salada Caesar", Description = "Alface romana crocante com frango grelhado, croutons, queijo parmesão e molho Caesar cremoso.", Photo = ReadImageFile("salada_caesar.png") },
-                new Dish { DishId = 8, Name = "Tacos de Carne", Description = "Tortillas de milho macias recheadas com carne temperada, coentro fresco, cebola e um toque de limão.", Photo = ReadImageFile("tacos_carne.png") },
-                new Dish { DishId = 9, Name = "Sushi de Salmão", Description = "Rolinhos de arroz temperado com alga nori, recheados com salmão fresco.", Photo = ReadImageFile("sushi_salmao.png") },
-                new Dish { DishId = 10, Name = "Mousse de Chocolate", Description = "Uma sobremesa aerada e intensa, feita com chocolate meio amargo e creme de leite.", Photo = ReadImageFile("mousse_chocolate.png") }
+                new Dish { DishId = 1, Name = "Pizza Marguerita", Description = "A Pizza Marguerita é um clássico napolitano, famosa por seus ingredientes simples e frescos que representam as cores da bandeira italiana.", Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png" },
+                new Dish { DishId = 2, Name = "Spaghetti Carbonara", Description = "Um prato de massa italiano de Roma, feito com ovos, queijo duro, carne de porco curada e pimenta preta.", Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/spaghetti_carbonara_twqcuv.png" },
+                new Dish { DishId = 3, Name = "Lasanha à Bolonhesa", Description = "Camadas de massa com molho à bolonhesa, molho branco e queijo, assadas à perfeição.", Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/lasanha_bolonhesa_gjtar8.png" },
+                new Dish { DishId = 4, Name = "Hambúrguer Clássico", Description = "Um suculento hambúrguer de carne com queijo, alface, tomate em um pão macio.", Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/hamburguer_classico_ki7xad.png" },
+                new Dish { DishId = 5, Name = "Frango à Parmegiana", Description = "Peito de frango empanado, coberto com molho de tomate e queijo muçarela derretido.", Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/frango_parmegiana_os4ych.png"},
+                new Dish { DishId = 6, Name = "Risoto de Cogumelos", Description = "Arroz cremoso cozido lentamente com cogumelos frescos, queijo parmesão e um toque de vinho branco.", Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/risoto_cogumelos_pxqd7w.png" },
+                new Dish { DishId = 7, Name = "Salada Caesar", Description = "Alface romana crocante com frango grelhado, croutons, queijo parmesão e molho Caesar cremoso.", Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/salada_caesar_cd6w4z.png" },
+                new Dish { DishId = 8, Name = "Tacos de Carne", Description = "Tortillas de milho macias recheadas com carne temperada, coentro fresco, cebola e um toque de limão.", Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/tacos_carne_bnmami.png" },
+                new Dish { DishId = 9, Name = "Sushi de Salmão", Description = "Rolinhos de arroz temperado com alga nori, recheados com salmão fresco.", Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/sushi_salmao_mxw2ro.png" },
+                new Dish { DishId = 10, Name = "Mousse de Chocolate", Description = "Uma sobremesa aerada e intensa, feita com chocolate meio amargo e creme de leite.", Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/mousse_chocolate_lutgwl.png" }
             );
 
             modelBuilder.Entity<Recipe>().HasData(
