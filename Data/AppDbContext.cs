@@ -47,6 +47,8 @@ namespace foodboxd_backend.Data
         modelBuilder.Entity<Dish>()
         .Property(tb => tb.Photo)
         .HasColumnType("LONGBLOB");
+        
+        modelBuilder.Seed();
 
         base.OnModelCreating(modelBuilder);
     }
