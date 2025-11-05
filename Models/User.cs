@@ -21,7 +21,6 @@ namespace foodboxd_backend.Models
         public DateOnly Birthdate { get; set; }
         public DateTime CreatedAt { get; set; }
 
-        public ICollection<Publication> Publications { get; set; }
         public ICollection<Rating> Ratings { get; set; }
         public ICollection<Favorite> Favorites { get; set; }
     }

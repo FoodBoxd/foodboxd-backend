@@ -12,6 +12,8 @@ namespace foodboxd_backend.Models
         [Required]
         public int Score { get; set; }
         public DateTime CreatedAt { get; set; }
+        [MaxLength(200)]
+        public string Comment { get; set; }
 
         public int UserId { get; set; }
         public User User { get; set; }
