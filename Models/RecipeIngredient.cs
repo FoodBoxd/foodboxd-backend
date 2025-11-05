@@ -14,7 +14,7 @@ namespace foodboxd_backend.Models
         [Key, Column(Order = 1)]
         public int IngredientId { get; set; }
         [Required]
-        public int Quantity { get; set; }
+        public double Quantity { get; set; }
         [Required, MaxLength(30)]
         public string MeasurementUnit { get; set; }
 
