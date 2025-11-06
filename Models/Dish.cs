@@ -17,7 +17,6 @@ namespace foodboxd_backend.Models
         public string Photo { get; set; }
 
         public Recipe Recipe { get; set; }
-        public ICollection<Publication> Publications { get; set; }
         public ICollection<Rating> Ratings { get; set; }
         public ICollection<Favorite> Favorites { get; set; }
     }
