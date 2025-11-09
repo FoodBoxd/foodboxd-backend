@@ -31,19 +31,61 @@ namespace foodboxd_backend.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetDish(int id)
         {
-            var dish = await _appDbContext.Dishes.FindAsync(id);
-            if (dish == null)
+            var dishDetails = await _appDbContext.Dishes
+                .AsNoTracking()
+                .Where(tb => tb.DishId == id)
+                .Select(tb => new
+                {
+                    dishId = tb.DishId,
+                    name = tb.Name,
+                    description = tb.Description,
+                    photo = tb.Photo,
+
+                    recipe = (tb.Recipe == null) ? null : new
+                    {
+                        recipeId = tb.Recipe.RecipeId,
+                        instructions = tb.Recipe.Instructions,
+
+                        ingredients = tb.Recipe.RecipeIngredients.Select(ri => new
+                        {
+                            ingredientId = ri.Ingredient.IngredientId,
+                            name = ri.Ingredient.Name,
+                            quantity = ri.Quantity,
+                            measurementUnit = ri.MeasurementUnit
+                        }).ToList() // Lista de ingredientes para esta receita
+                    },
+
+                    // 4. As Avaliações (Relacionamento 1:N)
+                    ratings = tb.Ratings.Select(r => new
+                    {
+                        ratingId = r.RatingId,
+                        score = r.Score,
+                        comment = r.Comment, // O campo que você adicionou
+                        createdAt = r.CreatedAt,
+
+                        // 5. O Usuário que avaliou (N:1, a partir da Avaliação)
+                        user = (r.User == null) ? null : new
+                        {
+                            userId = r.User.UserId,
+                            name = r.User.Name,
+                            profilePhoto = r.User.ProfilePhoto
+                        }
+                    }).ToList(), // Lista de avaliações para este prato
+
+                    // 6. Contagem de Favoritos (Cálculo 1:N)
+                    // EF Core traduz isso para um SQL COUNT() eficiente.
+                    favoritesCount = tb.Favorites.Count()
+                })
+                .FirstOrDefaultAsync(); // Encontra o primeiro (e único) prato com esse ID
+
+            // Se o Select() não encontrar nada, dishDetails será nulo
+            if (dishDetails == null)
             {
                 return NotFound(new { message = "Prato não encontrado" });
             }
 
-            return Ok(new
-            {
-                dishId = dish.DishId,
-                name = dish.Name,
-                description = dish.Description,
-                photo = dish.Photo
-            });
+            // Retorna o objeto complexo que acabamos de montar
+            return Ok(dishDetails);
         }
 
         [HttpPost]
@@ -127,6 +169,6 @@ namespace foodboxd_backend.Controllers
             public string Description { get; set; }
             public string Photo{ get; set; }
         }
-    }    
+    }
 
 }
