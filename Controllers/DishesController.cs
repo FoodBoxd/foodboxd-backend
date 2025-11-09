@@ -31,19 +31,55 @@ namespace foodboxd_backend.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetDish(int id)
         {
-            var dish = await _appDbContext.Dishes.FindAsync(id);
-            if (dish == null)
+            var dishDetails = await _appDbContext.Dishes
+                .AsNoTracking()
+                .Where(tb => tb.DishId == id)
+                .Select(tb => new
+                {
+                    dishId = tb.DishId,
+                    name = tb.Name,
+                    description = tb.Description,
+                    photo = tb.Photo,
+
+                    recipe = (tb.Recipe == null) ? null : new
+                    {
+                        recipeId = tb.Recipe.RecipeId,
+                        instructions = tb.Recipe.Instructions,
+
+                        ingredients = tb.Recipe.RecipeIngredients.Select(tb => new
+                        {
+                            ingredientId = tb.Ingredient.IngredientId,
+                            name = tb.Ingredient.Name,
+                            quantity = tb.Quantity,
+                            measurementUnit = tb.MeasurementUnit
+                        }).ToList()
+                    },
+
+                    ratings = tb.Ratings.Select(tb => new
+                    {
+                        ratingId = tb.RatingId,
+                        score = tb.Score,
+                        comment = tb.Comment,
+                        createdAt = tb.CreatedAt,
+
+                        user = (tb.User == null) ? null : new
+                        {
+                            userId = tb.User.UserId,
+                            name = tb.User.Name,
+                            profilePhoto = tb.User.ProfilePhoto
+                        }
+                    }).ToList(),
+
+                    favoritesCount = tb.Favorites.Count()
+                })
+                .FirstOrDefaultAsync();
+
+            if (dishDetails == null)
             {
                 return NotFound(new { message = "Prato não encontrado" });
             }
 
-            return Ok(new
-            {
-                dishId = dish.DishId,
-                name = dish.Name,
-                description = dish.Description,
-                photo = dish.Photo
-            });
+            return Ok(dishDetails);
         }
 
         [HttpPost]
@@ -127,6 +163,6 @@ namespace foodboxd_backend.Controllers
             public string Description { get; set; }
             public string Photo{ get; set; }
         }
-    }    
+    }
 
 }
