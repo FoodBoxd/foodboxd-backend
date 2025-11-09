@@ -2,6 +2,9 @@ using foodboxd_backend.Models;
 using foodboxd_backend.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq; // Necessário para .Any(), .Average(), .Count()
+using System; // Necessário para Task
+using System.Collections.Generic; // Necessário para IEnumerable
 
 namespace foodboxd_backend.Controllers
 {
@@ -26,6 +29,57 @@ namespace foodboxd_backend.Controllers
 
             var dishes = await _appDbContext.Dishes.ToListAsync();
             return Ok(dishes);
+        }
+
+        [HttpGet("search")]
+        public async Task<IActionResult> SearchDishes([FromQuery] string q)
+        {
+            var searchTerm = q != null ? q.ToLower().Trim() : string.Empty;
+
+            // 1. Inicia a consulta base incluindo o necessário para a busca
+            var baseQuery = _appDbContext.Dishes
+                .Include(d => d.Recipe)
+                    .ThenInclude(r => r.RecipeIngredients)
+                    .ThenInclude(ri => ri.Ingredient)
+                .AsQueryable(); // Converte para IQueryable para adicionar filtros
+
+            IQueryable<Dish> filteredQuery;
+
+            // 2. Aplica o filtro de busca SE o searchTerm não for vazio
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                filteredQuery = baseQuery.Where(d =>
+                    EF.Functions.Like(d.Name.ToLower(), $"%{searchTerm}%") ||
+                    EF.Functions.Like(d.Description.ToLower(), $"%{searchTerm}%") ||
+                    (d.Recipe != null && EF.Functions.Like(d.Recipe.Instructions.ToLower(), $"%{searchTerm}%")) ||
+                    (d.Recipe != null && d.Recipe.RecipeIngredients.Any(ri =>
+                        EF.Functions.Like(ri.Ingredient.Name.ToLower(), $"%{searchTerm}%")
+                    ))
+                );
+            }
+            else
+            {
+                // 3. Se a busca for vazia, usa a consulta base (todos os pratos)
+                filteredQuery = baseQuery;
+            }
+
+            // 4. Executa a consulta (filtrada ou não) e projeta o resultado
+            //    Incluindo os Ratings para os cálculos de média e contagem
+            var results = await filteredQuery
+                .Include(d => d.Ratings) // <-- INCLUI RATINGS PARA OS CÁLCULOS
+                .Select(d => new 
+                {
+                    id = d.DishId,
+                    name = d.Name,
+                    imageUrl = d.Photo, // Nome da prop que o frontend espera
+                    
+                    // Cálculos de Média e Contagem
+                    ratingCount = d.Ratings.Count(), 
+                    averageScore = d.Ratings.Any() ? d.Ratings.Average(r => r.Score) : 0.0 
+                })
+                .ToListAsync();
+
+            return Ok(results);
         }
 
         [HttpGet("{id}")]
