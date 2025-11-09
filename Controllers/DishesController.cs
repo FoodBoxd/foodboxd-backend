@@ -46,45 +46,39 @@ namespace foodboxd_backend.Controllers
                         recipeId = tb.Recipe.RecipeId,
                         instructions = tb.Recipe.Instructions,
 
-                        ingredients = tb.Recipe.RecipeIngredients.Select(ri => new
+                        ingredients = tb.Recipe.RecipeIngredients.Select(tb => new
                         {
-                            ingredientId = ri.Ingredient.IngredientId,
-                            name = ri.Ingredient.Name,
-                            quantity = ri.Quantity,
-                            measurementUnit = ri.MeasurementUnit
-                        }).ToList() // Lista de ingredientes para esta receita
+                            ingredientId = tb.Ingredient.IngredientId,
+                            name = tb.Ingredient.Name,
+                            quantity = tb.Quantity,
+                            measurementUnit = tb.MeasurementUnit
+                        }).ToList()
                     },
 
-                    // 4. As Avaliações (Relacionamento 1:N)
-                    ratings = tb.Ratings.Select(r => new
+                    ratings = tb.Ratings.Select(tb => new
                     {
-                        ratingId = r.RatingId,
-                        score = r.Score,
-                        comment = r.Comment, // O campo que você adicionou
-                        createdAt = r.CreatedAt,
+                        ratingId = tb.RatingId,
+                        score = tb.Score,
+                        comment = tb.Comment,
+                        createdAt = tb.CreatedAt,
 
-                        // 5. O Usuário que avaliou (N:1, a partir da Avaliação)
-                        user = (r.User == null) ? null : new
+                        user = (tb.User == null) ? null : new
                         {
-                            userId = r.User.UserId,
-                            name = r.User.Name,
-                            profilePhoto = r.User.ProfilePhoto
+                            userId = tb.User.UserId,
+                            name = tb.User.Name,
+                            profilePhoto = tb.User.ProfilePhoto
                         }
-                    }).ToList(), // Lista de avaliações para este prato
+                    }).ToList(),
 
-                    // 6. Contagem de Favoritos (Cálculo 1:N)
-                    // EF Core traduz isso para um SQL COUNT() eficiente.
                     favoritesCount = tb.Favorites.Count()
                 })
-                .FirstOrDefaultAsync(); // Encontra o primeiro (e único) prato com esse ID
+                .FirstOrDefaultAsync();
 
-            // Se o Select() não encontrar nada, dishDetails será nulo
             if (dishDetails == null)
             {
                 return NotFound(new { message = "Prato não encontrado" });
             }
 
-            // Retorna o objeto complexo que acabamos de montar
             return Ok(dishDetails);
         }
 
