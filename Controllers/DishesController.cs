@@ -67,15 +67,15 @@ namespace foodboxd_backend.Controllers
             //    Incluindo os Ratings para os cálculos de média e contagem
             var results = await filteredQuery
                 .Include(d => d.Ratings) // <-- INCLUI RATINGS PARA OS CÁLCULOS
-                .Select(d => new 
+                .Select(d => new
                 {
                     id = d.DishId,
                     name = d.Name,
                     imageUrl = d.Photo, // Nome da prop que o frontend espera
-                    
+
                     // Cálculos de Média e Contagem
-                    ratingCount = d.Ratings.Count(), 
-                    averageScore = d.Ratings.Any() ? d.Ratings.Average(r => r.Score) : 0.0 
+                    ratingCount = d.Ratings.Count(),
+                    averageScore = d.Ratings.Any() ? d.Ratings.Average(r => r.Score) : 0.0
                 })
                 .ToListAsync();
 
@@ -215,7 +215,7 @@ namespace foodboxd_backend.Controllers
         {
             public string Name { get; set; }
             public string Description { get; set; }
-            public string Photo{ get; set; }
+            public string Photo { get; set; }
         }
     }
 
