@@ -2,9 +2,9 @@ using foodboxd_backend.Models;
 using foodboxd_backend.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Linq; // Necessário para .Any(), .Average(), .Count()
-using System; // Necessário para Task
-using System.Collections.Generic; // Necessário para IEnumerable
+using System.Linq;
+using System;
+using System.Collections.Generic;
 
 namespace foodboxd_backend.Controllers
 {
@@ -36,16 +36,14 @@ namespace foodboxd_backend.Controllers
         {
             var searchTerm = q != null ? q.ToLower().Trim() : string.Empty;
 
-            // 1. Inicia a consulta base incluindo o necessário para a busca
             var baseQuery = _appDbContext.Dishes
                 .Include(d => d.Recipe)
                     .ThenInclude(r => r.RecipeIngredients)
                     .ThenInclude(ri => ri.Ingredient)
-                .AsQueryable(); // Converte para IQueryable para adicionar filtros
+                .AsQueryable();
 
             IQueryable<Dish> filteredQuery;
 
-            // 2. Aplica o filtro de busca SE o searchTerm não for vazio
             if (!string.IsNullOrWhiteSpace(searchTerm))
             {
                 filteredQuery = baseQuery.Where(d =>
@@ -59,21 +57,17 @@ namespace foodboxd_backend.Controllers
             }
             else
             {
-                // 3. Se a busca for vazia, usa a consulta base (todos os pratos)
                 filteredQuery = baseQuery;
             }
 
-            // 4. Executa a consulta (filtrada ou não) e projeta o resultado
-            //    Incluindo os Ratings para os cálculos de média e contagem
             var results = await filteredQuery
-                .Include(d => d.Ratings) // <-- INCLUI RATINGS PARA OS CÁLCULOS
+                .Include(d => d.Ratings)
                 .Select(d => new
                 {
                     id = d.DishId,
                     name = d.Name,
-                    imageUrl = d.Photo, // Nome da prop que o frontend espera
+                    imageUrl = d.Photo,
 
-                    // Cálculos de Média e Contagem
                     ratingCount = d.Ratings.Count(),
                     averageScore = d.Ratings.Any() ? d.Ratings.Average(r => r.Score) : 0.0
                 })
