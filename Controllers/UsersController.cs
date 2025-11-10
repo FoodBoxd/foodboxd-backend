@@ -20,6 +20,50 @@ namespace foodboxd_backend.Controllers
             _appDbContext = appDbContext;
         }
 
+        [HttpGet("{id}/profile")]
+        public async Task<IActionResult> GetUserProfile(int id)
+        {
+            var userProfile = await _appDbContext.Users
+                .Where(u => u.UserId == id)
+                .Select(u => new
+                {
+                    userId = u.UserId,
+                    name = u.Name,
+                    biography = u.Biography,
+                    profilePhoto = u.ProfilePhoto != null ? Convert.ToBase64String(u.ProfilePhoto) : null,
+                    memberSince = u.CreatedAt,
+
+                    stats = new
+                    {
+                        dishesRated = u.Ratings.Select(r => r.DishId).Distinct().Count(),
+                        reviewsCount = u.Ratings.Count(),
+                        averageScore = u.Ratings.Any() ? u.Ratings.Average(r => r.Score) : 0,
+
+                        followers = 342,
+                        following = 156
+                    },
+
+                    ratedDishes = u.Ratings
+                        .OrderByDescending(r => r.CreatedAt)
+                        .Select(r => new
+                        {
+                            dishId = r.Dish.DishId,
+                            dishName = r.Dish.Name,
+                            dishPhoto = r.Dish.Photo,
+                            userScore = r.Score
+                        }).ToList()
+
+                })
+                .FirstOrDefaultAsync();
+
+            if (userProfile == null)
+            {
+                return NotFound(new { message = "Perfil de usuário não encontrado" });
+            }
+
+            return Ok(userProfile);
+        }
+
         // GET: api/users - Busca todos os usuários
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
@@ -72,7 +116,8 @@ namespace foodboxd_backend.Controllers
                 Name = request.Name,
                 Email = request.Email,
                 Password = request.Password,
-                CreatedAt = DateTime.UtcNow
+                CreatedAt = DateTime.UtcNow,
+                Birthdate = request.Birthdate
             };
 
             _appDbContext.Users.Add(newUser);
@@ -122,5 +167,6 @@ namespace foodboxd_backend.Controllers
         public string Name { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+        public DateOnly Birthdate { get; set; }
     }
 }
