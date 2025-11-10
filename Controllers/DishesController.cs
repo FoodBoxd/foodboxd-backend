@@ -2,6 +2,9 @@ using foodboxd_backend.Models;
 using foodboxd_backend.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System;
+using System.Collections.Generic;
 
 namespace foodboxd_backend.Controllers
 {
@@ -26,6 +29,51 @@ namespace foodboxd_backend.Controllers
 
             var dishes = await _appDbContext.Dishes.ToListAsync();
             return Ok(dishes);
+        }
+
+        [HttpGet("search")]
+        public async Task<IActionResult> SearchDishes([FromQuery] string q)
+        {
+            var searchTerm = q != null ? q.ToLower().Trim() : string.Empty;
+
+            var baseQuery = _appDbContext.Dishes
+                .Include(d => d.Recipe)
+                    .ThenInclude(r => r.RecipeIngredients)
+                    .ThenInclude(ri => ri.Ingredient)
+                .AsQueryable();
+
+            IQueryable<Dish> filteredQuery;
+
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                filteredQuery = baseQuery.Where(d =>
+                    EF.Functions.Like(d.Name.ToLower(), $"%{searchTerm}%") ||
+                    EF.Functions.Like(d.Description.ToLower(), $"%{searchTerm}%") ||
+                    (d.Recipe != null && EF.Functions.Like(d.Recipe.Instructions.ToLower(), $"%{searchTerm}%")) ||
+                    (d.Recipe != null && d.Recipe.RecipeIngredients.Any(ri =>
+                        EF.Functions.Like(ri.Ingredient.Name.ToLower(), $"%{searchTerm}%")
+                    ))
+                );
+            }
+            else
+            {
+                filteredQuery = baseQuery;
+            }
+
+            var results = await filteredQuery
+                .Include(d => d.Ratings)
+                .Select(d => new
+                {
+                    id = d.DishId,
+                    name = d.Name,
+                    imageUrl = d.Photo,
+
+                    ratingCount = d.Ratings.Count(),
+                    averageScore = d.Ratings.Any() ? d.Ratings.Average(r => r.Score) : 0.0
+                })
+                .ToListAsync();
+
+            return Ok(results);
         }
 
         [HttpGet("{id}")]
@@ -161,7 +209,7 @@ namespace foodboxd_backend.Controllers
         {
             public string Name { get; set; }
             public string Description { get; set; }
-            public string Photo{ get; set; }
+            public string Photo { get; set; }
         }
     }
 
