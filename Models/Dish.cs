@@ -9,7 +9,7 @@ namespace foodboxd_backend.Models
     public class Dish
     {
         public int DishId { get; set; }
-        [Required, MaxLength(30)]
+        [Required, MaxLength(50)]
         public string Name { get; set; }
         [Required]
         public string Description { get; set; }

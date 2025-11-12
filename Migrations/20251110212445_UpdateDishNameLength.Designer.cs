@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using foodboxd_backend.Data;
 
@@ -11,9 +12,11 @@ using foodboxd_backend.Data;
 namespace foodboxd_backend.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251110212445_UpdateDishNameLength")]
+    partial class UpdateDishNameLength
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -123,630 +126,630 @@ namespace foodboxd_backend.Migrations
                             DishId = 11,
                             Description = "Sobremesa clássica francesa com creme aveludado e cobertura crocante de açúcar queimado.",
                             Name = "Creme Brûlée",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812018/creme_brule_g2bdne.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 12,
                             Description = "Salada leve do Oriente Médio, à base de trigo para quibe (bulgur), ervas frescas, tomate e limão.",
                             Name = "Tabule",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762811987/tabule_sxcrcx.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 13,
                             Description = "Panquecas fofas de banana, simples e reconfortantes, servidas com manteiga ou mel.",
                             Name = "Panqueca de Banana",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812098/panqueca_banana_lppavr.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 14,
                             Description = "Ensopado brasileiro de peixe cozido em leite de coco, tomate, cebola e coentro.",
                             Name = "Moqueca de Peixe",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812097/moqueca_tniuew.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 15,
                             Description = "Doce brasileiro cremoso à base de leite condensado e chocolate, enrolado em bolinhas cobertas com granulado.",
                             Name = "Brigadeiro",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812011/brigadeiro_vfwxga.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 16,
                             Description = "Ensopado cremoso brasileiro feito com camarão, mandioca e leite de coco, aromatizado com coentro.",
                             Name = "Bobó de Camarão",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812010/bobo_camarao_ghwhar.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 17,
                             Description = "Torta salgada francesa recheada com bacon, queijo e creme, de textura firme e sabor levemente amanteigado.",
                             Name = "Quiche Lorraine",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762811981/quiche_ewbzts.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 18,
                             Description = "Pão crocante coberto por uma mistura aromática de manteiga, alho e ervas, perfeito como acompanhamento para churrascos.",
                             Name = "Pão de Alho e Ervas",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812099/pao_de_alho_ervas_ny5sht.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 19,
                             Description = "Prato refrescante de origem peruana: cubos de salmão marinados em limão com cebola, coentro e pimenta.",
                             Name = "Ceviche de Salmão",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812016/ceviche_salmao_k9gh8k.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 20,
                             Description = "Sobremesa em camadas com biscoito, creme de chocolate e leite condensado, servida gelada.",
                             Name = "Pavê de Chocolate",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812115/pave_lmljsj.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 21,
                             Description = "Prato tradicional brasileiro à base de feijão preto, carnes salgadas e acompanhamentos como arroz e farofa.",
                             Name = "Feijoada",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812024/feijoada_iaowd4.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 22,
                             Description = "Bolinho frito de feijão-fradinho recheado com vatapá e camarão, típico da culinária baiana.",
                             Name = "Acarajé",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812002/acaraje_ykab95.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 23,
                             Description = "Creme rico e aromático à base de pão, camarão, leite de coco, azeite de dendê e amendoim, servido com arroz ou acarajé.",
                             Name = "Vatapá",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762811992/vatapa_ascc8f.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 24,
                             Description = "Prato rural de arroz com carne seca e linguiça, saboroso e pronto para aproveitar sobras de carne.",
                             Name = "Arroz Carreteiro",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812003/arroz_carreteiro_bujrbq.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 25,
                             Description = "Clássico nordestino que combina arroz e feijão de corda com queijo coalho e temperos, cremoso e nutritivo.",
                             Name = "Baião de Dois",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812003/baiao_dois_xn4pcz.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 26,
                             Description = "Purê de mandioca cobrindo um recheio suculento de carne seca desfiada, gratinado com queijo.",
                             Name = "Escondidinho de Carne Seca",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812023/escondidinho_cseca_fbm1ml.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 27,
                             Description = "Peça nobre do churrasco brasileiro, temperada e assada até formar crosta dourada e suculenta por dentro.",
                             Name = "Picanha Assada",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812113/picanha_wgubmf.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 28,
                             Description = "Salgado frito recheado (carne, queijo ou outros), crocante por fora e muito popular em feiras e lanchonetes.",
                             Name = "Pastel de Feira",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812112/pastel_rcbdek.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 29,
                             Description = "Salgadinho de massa de farinha recheado com frango desfiado, empanado e frito até ficar dourado.",
                             Name = "Coxinha",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812018/coxinha_zx3ruj.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 30,
                             Description = "Sobremesa cremosa feita com milho branco, leite de coco, leite condensado e canela, servida gelada ou morna.",
                             Name = "Canjica",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812016/canjica_fmaicy.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 31,
                             Description = "Clássico prato de macarrão tailandês, sabor agridoce com amendoim e limão.",
                             Name = "Pad Thai",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812097/pad_tai_fcf2yz.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 32,
                             Description = "Sopa japonesa reconfortante com caldo aromático, noodles e toppings variados.",
                             Name = "Ramen",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762811981/ramen_znugjq.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 33,
                             Description = "Prato chinês apimentado e agridoce com pedaços de frango empanados e molho caramelizado.",
                             Name = "Frango General Tso",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812058/frango_general_tso_w7g7kj.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 34,
                             Description = "Pastelzinho japonês recheado, levemente dourado e servido com molho shoyu.",
                             Name = "Gyoza",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812058/guioza_ykbekx.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 35,
                             Description = "Prato coreano colorido com arroz, legumes, carne e ovo, servido com óleo de gergelim.",
                             Name = "Bibimbap",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812009/bibimbap_z582k4.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 36,
                             Description = "Curry aromático com leite de coco, ervas e pimenta, geralmente servido com arroz.",
                             Name = "Curry Verde Tailandês",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812023/curry_verde_r8gytm.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 37,
                             Description = "Peito de frango glaceado em molho teriyaki, levemente adocicado e brilhante.",
                             Name = "Frango Teriyaki",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812062/frango_teriyaki_rgw3cc.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 38,
                             Description = "Receita indiana cremosa com molho à base de tomate, especiarias e manteiga.",
                             Name = "Frango Manteiga (Butter Chicken)",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812016/butter_chicken_rdtyvh.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 39,
                             Description = "Prato picante chinês com tofu macio e carne em molho apimentado e aromático.",
                             Name = "Mapo Tofu",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812097/mapo_tofu_exvjcf.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 40,
                             Description = "Carne bovina marinada e grelhada no estilo coreano, saborosa e levemente adocicada.",
                             Name = "Bulgogi",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812011/bulgogi_o9os4l.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 41,
                             Description = "Ensopado francês de carne cozida lentamente em vinho tinto, com bacon, cebolas e ervas.",
                             Name = "Beef Bourguignon",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812009/beef_bouguignon_zeme2m.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 42,
                             Description = "Sobremesa italiana clássica feita com camadas de biscoito embebido em café, creme de mascarpone e cacau.",
                             Name = "Tiramisù",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762811989/tiramisu_uai6ky.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 43,
                             Description = "Massa italiana com molho robusto de tomate, azeitonas, alcaparras e alho.",
                             Name = "Pasta Puttanesca",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762811981/putanesca_nnwv8y.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 44,
                             Description = "Ícone espanhol de arroz com frutos do mar, açafrão e pimentões, cozido em uma panela larga.",
                             Name = "Paella Valenciana",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812098/paella_wrjle9.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 45,
                             Description = "Assado grego em camadas de berinjela, carne temperada e molho cremoso, gratinado com queijo.",
                             Name = "Moussaka",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812097/moussaka_fss565.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 46,
                             Description = "Nhoques leves feitos com batata e farinha, servidos com manteiga ou molho de sua preferência.",
                             Name = "Gnocchi de Batata",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812059/gnocci_gvsoac.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 47,
                             Description = "Guarnição francesa de legumes (berinjela, pimentão, tomate) lentamente cozidos com ervas.",
                             Name = "Ratatouille",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762811982/ratatouille_v2_tdn9at.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 48,
                             Description = "Entrada italiana simples: pão tostado com tomate fresco, alho e manjericão.",
                             Name = "Bruschetta al Pomodoro",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812011/bruschetta_ry0qsy.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 49,
                             Description = "Sopa de peixe tradicional de Marselha, rica em sabores do mar e temperos como açafrão.",
                             Name = "Bouillabaisse",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812010/bouillabaisse_i3sm9i.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 50,
                             Description = "Risoto italiano aromatizado com açafrão, cremoso e finalizado com queijo parmesão.",
                             Name = "Risotto alla Milanese",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762811983/risotto_milanese_tglurr.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 51,
                             Description = "Torta invertida de maçã caramelizada, servida quente com crosta amanteigada.",
                             Name = "Tarte Tatin",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762811989/tarte_tatin_itdflk.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 52,
                             Description = "Sobremesa italiana cremosa feita com creme de leite, açúcar e gelatina, aromatizada com baunilha.",
                             Name = "Panna Cotta",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812098/pannacota_kcybkf.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 53,
                             Description = "Cheesecake clássico com base de biscoito e recheio cremoso de cream cheese.",
                             Name = "New York Cheesecake",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812017/cheesecake_fp28cw.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 54,
                             Description = "Merengue crocante por fora e macio por dentro, servido com chantilly e frutas vermelhas.",
                             Name = "Pavlova de Frutas Vermelhas",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812112/pavlova_iavxig.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 55,
                             Description = "Torta de maçã tradicional com massa amanteigada e recheio levemente caramelizado.",
                             Name = "Apple Pie",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812003/apple_pie_zza3ji.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 56,
                             Description = "Bolinh0s de massa choux recheados, servidos com molho quente de chocolate.",
                             Name = "Profiteroles com Chocolate",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762811983/profiteroles_wfzbuh.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 57,
                             Description = "Petit gateau com interior cremoso de chocolate derretido; servido quente.",
                             Name = "Chocolate Fondant (Lava Cake)",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812019/chocolate_fondant_op9vlq.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 58,
                             Description = "Tarte de limão com recheio cítrico e massa amanteigada, finalizada com merengue ou creme.",
                             Name = "Tarte de Limão",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762811986/tarte_limao_z0dmhk.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 59,
                             Description = "Sorvete cremoso de baunilha, textura densa e sabor puro de baunilha.",
                             Name = "Gelato de Baunilha",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762811984/sorvete_baunilha_z6fmv7.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 60,
                             Description = "Creme espanhol semelhante ao crème brûlée, coberto por uma crosta de açúcar queimado.",
                             Name = "Crème Catalane",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812023/creme_catalane_nlzrb0.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 61,
                             Description = "Típica da Venezuela e Colômbia, massa de milho grelhada ou frita, geralmente recheada com queijo ou carnes.",
                             Name = "Arepa",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812005/arepa_gpwweo.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 62,
                             Description = "Bolinho frito de grão-de-bico temperado, servido em pão sírio com tahine e salada.",
                             Name = "Falafel Wrap",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812023/falafel_wrap_cbip5g.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 63,
                             Description = "Sanduíche vietnamita em baguete crocante, com carne marinada, vegetais em conserva e ervas frescas.",
                             Name = "Bánh Mì",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812004/banh_mi_o6x7zm.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 64,
                             Description = "Salgado frito típico do Sul da Ásia: massa crocante recheada com batata temperada e ervilhas.",
                             Name = "Samosa",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762811985/samosa_fezf1o.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 65,
                             Description = "Clássico brasileiro em formato de bolinha, leve e borrachudo, feito com polvilho e queijo.",
                             Name = "Pão de Queijo",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812099/pao_queijo_dzge8p.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 66,
                             Description = "Pastel assado ou frito recheado com carne temperada, muito popular como comida de rua na Argentina.",
                             Name = "Empanada Argentina",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812023/empanada_rrulfv.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 67,
                             Description = "Carne temperada fatiada servida em pão sírio com molhos e vegetais - clássico do Oriente Médio.",
                             Name = "Shawarma",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762811984/shawarma_czkxrk.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 68,
                             Description = "Doce frito em massa simples polvilhado com açúcar e canela, frequentemente servido com chocolate.",
                             Name = "Churros",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812017/churros_atcylq.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 69,
                             Description = "Pãozinho chinês cozido no vapor, macio e levemente adocicado, geralmente recheado com carne ou legumes.",
                             Name = "Bao Bun",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812017/churros_atcylq.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 70,
                             Description = "Especialidade de El Salvador: tortilla grossa de milho recheada com queijo e feijão, grelhada até dourar.",
                             Name = "Pupusa",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762811982/pupusa_c3npyt.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 71,
                             Description = "Salada fresca e colorida com tomate, pepino, azeitonas e queijo feta, temperada com azeite e orégãos.",
                             Name = "Salada Grega",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762811983/salada_grega_abtabf.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 72,
                             Description = "Ensopado de tomates e pimentões com ovos pochê, temperado com alho e especiarias, típico do Mediterrâneo oriental.",
                             Name = "Shakshuka",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762811984/shakshuka_t7yvpc.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 73,
                             Description = "Berinjela grelhada servida com molho de tahine, alho e limão, ótima como entrada ou acompanhamento.",
                             Name = "Berinjela Assada com Tahine",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812009/beringela_tahine_enll95.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 74,
                             Description = "Peito de frango marinado em ervas e limão, assado até ficar dourado e suculento.",
                             Name = "Frango Assado ao Limão e Ervas",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812058/frango_limao_ervas_iykwy4.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 75,
                             Description = "Mexilhões cozidos em caldo aromático de vinho branco, alho e ervas, servidos com pão.",
                             Name = "Mexilhões ao Alho e Vinho Branco",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812099/mexilhao_alho_karkll.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 76,
                             Description = "Pastinha cremosa de grão-de-bico e tahine servida com pão sírio aquecido e azeite.",
                             Name = "Hummus com Pão Sírio",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812060/hummus_pao_sirio_hdg5iy.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 77,
                             Description = "Patê rústico de azeitonas e alcaparras, perfeito para barrar em fatias de baguete torradas.",
                             Name = "Tapenade de Azeitonas com Baguete",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762811985/tapenade_pdz5hu.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 78,
                             Description = "Queijo feta assado com tomates, alho e ervas, servido quente com pão crocante.",
                             Name = "Feta Assado com Tomates",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812025/feta_assado_pl2dmv.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 79,
                             Description = "Batatas assadas com limão, alho e ervas aromáticas, crocantes por fora e macias por dentro.",
                             Name = "Batatas Gregas ao Limão e Ervas",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812004/batata_grega_nspjgv.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 80,
                             Description = "Pimentões assados recheados com bulgur temperado, tomate, ervas e queijo feta.",
                             Name = "Pimentões Recheados com Bulgur",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762811980/pimentao_bulgur_rirqcy.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 81,
                             Description = "Arroz aromático rico em tomate e especiarias, clássico de vários países da África Ocidental, normalmente servido com carne ou frango.",
                             Name = "Jollof Rice",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812060/jollof_ssowuq.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 82,
                             Description = "Prato sul-africano assado com carne temperada, camada de ovos e leite formando uma textura cremosa por cima, levemente adocicado com especiarias.",
                             Name = "Bobotie",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812012/bobotie_hzfmuf.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 83,
                             Description = "Espetinhos de carne secos e bem temperados com mistura de amendoim e especiarias, grelhados até ficarem crocantes nas bordas.",
                             Name = "Suya",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762811984/suya_bb9wlh.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 84,
                             Description = "Ensopado marroquino de carne e especiarias, cozido lentamente com legumes até o molho ficar concentrado e aromático.",
                             Name = "Tagine de Carne",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762811984/suya_bb9wlh.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 85,
                             Description = "Prato senegalês de frango marinado em cebola e limão, lentamente cozido até ficar suculento e com sabor ácido e levemente caramelizado.",
                             Name = "Poulet Yassa",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762811981/poulet_yaza_abzoyb.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 86,
                             Description = "Camarões temperados com piri-piri e alho, grelhados rapidamente e servidos com molho picante e limão.",
                             Name = "Piri-Piri Camarão",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762811981/poulet_yaza_abzoyb.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 87,
                             Description = "Fritos doces do Leste Africano, semelhantes a donuts leves e aromáticos, perfeitos como lanche ou sobremesa.",
                             Name = "Mandazi",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812096/mandazi_nj5zbj.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 88,
                             Description = "Papa de farinha de milho (ou fubá) tradicional, acompanhamento simples e reconfortante consumido em várias regiões da África.",
                             Name = "Pap (Ugali)",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812111/pap_ugali_sirz0t.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 89,
                             Description = "Mistura egípcia de arroz, macarrão e grão-de-bico, servida com molho de tomate picante e cebola crocante por cima.",
                             Name = "Koshari",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812089/koshari_hufhow.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 90,
                             Description = "Pão oco recheado com curry rico e picante — um clássico de Durban com raízes indianas e africanas.",
                             Name = "Bunny Chow",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812016/bunny_chow_xbdhb3.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 91,
                             Description = "Clássico britânico: filé de peixe empanado e frito servido com batatas fritas crocantes e vinagre para acompanhar.",
                             Name = "Fish and Chips",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812048/fish_chips_fdmmt3.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 92,
                             Description = "Ensopado etíope de frango com berbere e cebolas caramelizadas, servido tradicionalmente com injera.",
                             Name = "Doro Wat",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812027/doro_wat_ja9qpv.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 93,
                             Description = "Frango jamaicano marinado em especiarias e pimenta, grelhado até ficar defumado e aromático.",
                             Name = "Jerk Chicken",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812060/jerk_chicken_tqk8qa.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 94,
                             Description = "Especialidade georgiana: pão recheado generosamente com queijo derretido e ovo no centro.",
                             Name = "Khachapuri",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812060/khachapuri_c4xn4p.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 95,
                             Description = "Carne marinada em vinagre e molho de soja, cozida até ficar macia e rica em sabor; prato essencial filipino.",
                             Name = "Adobo (Filipinas)",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812003/adobo_crt4nz.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 96,
                             Description = "Ensopado persa rico com nozes e molho de romã, complexo e aveludado, tradicionalmente servido com arroz.",
                             Name = "Fesenjan",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812025/fesenjan_y1gpim.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 97,
                             Description = "Bolinho polonês recheado (batata e queijo ou outras variações), cozido e por vezes dourado na manteiga; reconfortante e versátil.",
                             Name = "Pierogi",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762811980/pierogi_llndrr.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 98,
                             Description = "Tigela havaiana com peixe cru marinado, arroz, algas e acompanhamentos frescos; leve e customizável.",
                             Name = "Poke Bowl",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762811980/poke_bfadwv.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 99,
                             Description = "Doce português: creme de ovos sobre massa folhada crocante, polvilhado levemente com canela e servido quente.",
                             Name = "Pastel de Nata",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812112/pastel_de_nata_gxhsyf.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         },
                         new
                         {
                             DishId = 100,
                             Description = "Papa de mandioca servida com um ensopado rico de amendoim e carne, muito comum em várias cozinhas da África Ocidental.",
                             Name = "Fufu com Ensopado de Amendoim",
-                            Photo = "https://res.cloudinary.com/djwfw75pg/image/upload/v1762812058/fufu_amendoim_y16vzv.png"
+                            Photo = "https://res.cloudinary.com/dslsxyvkp/image/upload/pizza_marguerita_so8rnj.png"
                         });
                 });
 
