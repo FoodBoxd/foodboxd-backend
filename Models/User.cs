@@ -23,5 +23,7 @@ namespace foodboxd_backend.Models
 
         public ICollection<Rating> Ratings { get; set; }
         public ICollection<Favorite> Favorites { get; set; }
+
+        public ICollection<RatingLike> RatingLikes { get; set; }
     }
 }
