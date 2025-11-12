@@ -19,5 +19,7 @@ namespace foodboxd_backend.Models
         public User User { get; set; }
         public int DishId { get; set; }
         public Dish Dish { get; set; }
+
+        public ICollection<RatingLike> Likes { get; set; }
     }
 }

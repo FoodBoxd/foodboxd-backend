@@ -22,7 +22,7 @@ namespace foodboxd_backend.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Dish>>> GetDishes()
         {
-            if (_appDbContext.Dishes == null)
+             if (_appDbContext.Dishes == null)
             {
                 return NotFound("Tabela dishes não encontrada");
             }
@@ -79,6 +79,8 @@ namespace foodboxd_backend.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetDish(int id)
         {
+            int currentUserId = 1;
+
             var dishDetails = await _appDbContext.Dishes
                 .AsNoTracking()
                 .Where(tb => tb.DishId == id)
@@ -103,20 +105,26 @@ namespace foodboxd_backend.Controllers
                         }).ToList()
                     },
 
-                    ratings = tb.Ratings.Select(tb => new
-                    {
-                        ratingId = tb.RatingId,
-                        score = tb.Score,
-                        comment = tb.Comment,
-                        createdAt = tb.CreatedAt,
-
-                        user = (tb.User == null) ? null : new
+                    ratings = tb.Ratings
+                        .OrderByDescending(r => r.CreatedAt)
+                        .Select(r => new
                         {
-                            userId = tb.User.UserId,
-                            name = tb.User.Name,
-                            profilePhoto = tb.User.ProfilePhoto
-                        }
-                    }).ToList(),
+                            ratingId = r.RatingId,
+                            score = r.Score,
+                            comment = r.Comment,
+                            createdAt = r.CreatedAt,
+
+                            user = (r.User == null) ? null : new
+                            {
+                                userId = r.User.UserId,
+                                name = r.User.Name,
+                                profilePhoto = r.User.ProfilePhoto
+                            },
+
+                            likeCount = r.Likes.Count(),
+                            isLikedByCurrentUser = r.Likes.Any(l => l.UserId == currentUserId)
+
+                        }).ToList(),
 
                     favoritesCount = tb.Favorites.Count()
                 })
@@ -212,5 +220,4 @@ namespace foodboxd_backend.Controllers
             public string Photo { get; set; }
         }
     }
-
 }
