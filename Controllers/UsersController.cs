@@ -21,11 +21,9 @@ namespace foodboxd_backend.Controllers
             _appDbContext = appDbContext;
         }
 
-        // POST: api/users/login
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
-            // Busca o usuário pelo e-mail
             var user = await _appDbContext.Users.FirstOrDefaultAsync(u =>
                 u.Email == request.Email);
 
@@ -34,13 +32,11 @@ namespace foodboxd_backend.Controllers
                 return Unauthorized(new { message = "Email ou senha incorretos" });
             }
 
-            // Verifica o hash da senha
             if (!VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))
             {
                 return Unauthorized(new { message = "Email ou senha incorretos" });
             }
 
-            // Sucesso: Retorna os dados do usuário para o frontend
             return Ok(new
             {
                 userId = user.UserId,
@@ -49,17 +45,14 @@ namespace foodboxd_backend.Controllers
             });
         }
 
-        // POST: api/users/register
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterRequest request)
         {
-            // Verifica se o e-mail já existe
             if (await _appDbContext.Users.AnyAsync(u => u.Email == request.Email))
             {
                 return BadRequest(new { message = "Este e-mail já está em uso." });
             }
 
-            // Cria o Hash e o Salt da senha
             CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
 
             var newUser = new User
@@ -67,15 +60,14 @@ namespace foodboxd_backend.Controllers
                 Name = request.Name,
                 Email = request.Email,
                 Birthdate = request.Birthdate,
-                PasswordHash = passwordHash, // Salva o hash
-                PasswordSalt = passwordSalt, // Salva o salt
+                PasswordHash = passwordHash,
+                PasswordSalt = passwordSalt,
                 CreatedAt = DateTime.UtcNow
             };
 
             _appDbContext.Users.Add(newUser);
             await _appDbContext.SaveChangesAsync();
 
-            // Sucesso: Retorna os dados do novo usuário para o frontend
             return Ok(new
             {
                 userId = newUser.UserId,
@@ -84,12 +76,9 @@ namespace foodboxd_backend.Controllers
             });
         }
 
-        // --- Outros Endpoints (ex: GetUserProfile) ---
-        // (O restante do seu controller UsersController.cs permanece aqui...)
         [HttpGet("{id}/profile")]
         public async Task<IActionResult> GetUserProfile(int id)
         {
-             // ... (código do GetUserProfile que você já tinha)
             var userProfile = await _appDbContext.Users
                 .Where(u => u.UserId == id)
                 .Select(u => new
@@ -131,8 +120,6 @@ namespace foodboxd_backend.Controllers
             return Ok(userProfile);
         }
 
-        // --- Métodos Auxiliares de Hashing ---
-
         private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
             using (var hmac = new HMACSHA512())
@@ -152,7 +139,6 @@ namespace foodboxd_backend.Controllers
         }
     }
 
-    // DTOs (Data Transfer Objects)
     public class LoginRequest
     {
         public string Email { get; set; }
