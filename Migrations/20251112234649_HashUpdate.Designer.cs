@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using foodboxd_backend.Data;
 
@@ -11,9 +12,11 @@ using foodboxd_backend.Data;
 namespace foodboxd_backend.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251112234649_HashUpdate")]
+    partial class HashUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1395,23 +1398,6 @@ namespace foodboxd_backend.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Ratings");
-                });
-
-            modelBuilder.Entity("foodboxd_backend.Models.RatingLike", b =>
-                {
-                    b.Property<int>("UserId")
-                        .HasColumnType("int")
-                        .HasColumnOrder(0);
-
-                    b.Property<int>("RatingId")
-                        .HasColumnType("int")
-                        .HasColumnOrder(1);
-
-                    b.HasKey("UserId", "RatingId");
-
-                    b.HasIndex("RatingId");
-
-                    b.ToTable("RatingLikes");
                 });
 
             modelBuilder.Entity("foodboxd_backend.Models.Recipe", b =>
@@ -6795,25 +6781,6 @@ namespace foodboxd_backend.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("foodboxd_backend.Models.RatingLike", b =>
-                {
-                    b.HasOne("foodboxd_backend.Models.Rating", "Rating")
-                        .WithMany("Likes")
-                        .HasForeignKey("RatingId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("foodboxd_backend.Models.User", "User")
-                        .WithMany("RatingLikes")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Rating");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("foodboxd_backend.Models.Recipe", b =>
                 {
                     b.HasOne("foodboxd_backend.Models.Dish", "Dish")
@@ -6858,11 +6825,6 @@ namespace foodboxd_backend.Migrations
                     b.Navigation("RecipeIngredients");
                 });
 
-            modelBuilder.Entity("foodboxd_backend.Models.Rating", b =>
-                {
-                    b.Navigation("Likes");
-                });
-
             modelBuilder.Entity("foodboxd_backend.Models.Recipe", b =>
                 {
                     b.Navigation("RecipeIngredients");
@@ -6871,8 +6833,6 @@ namespace foodboxd_backend.Migrations
             modelBuilder.Entity("foodboxd_backend.Models.User", b =>
                 {
                     b.Navigation("Favorites");
-
-                    b.Navigation("RatingLikes");
 
                     b.Navigation("Ratings");
                 });

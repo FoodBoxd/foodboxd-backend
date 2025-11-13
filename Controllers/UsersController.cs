@@ -1,6 +1,7 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 using foodboxd_backend.Data;
 using foodboxd_backend.Models;
@@ -20,9 +21,75 @@ namespace foodboxd_backend.Controllers
             _appDbContext = appDbContext;
         }
 
+        // POST: api/users/login
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginRequest request)
+        {
+            // Busca o usuário pelo e-mail
+            var user = await _appDbContext.Users.FirstOrDefaultAsync(u =>
+                u.Email == request.Email);
+
+            if (user == null)
+            {
+                return Unauthorized(new { message = "Email ou senha incorretos" });
+            }
+
+            // Verifica o hash da senha
+            if (!VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))
+            {
+                return Unauthorized(new { message = "Email ou senha incorretos" });
+            }
+
+            // Sucesso: Retorna os dados do usuário para o frontend
+            return Ok(new
+            {
+                userId = user.UserId,
+                name = user.Name,
+                email = user.Email
+            });
+        }
+
+        // POST: api/users/register
+        [HttpPost("register")]
+        public async Task<IActionResult> Register([FromBody] RegisterRequest request)
+        {
+            // Verifica se o e-mail já existe
+            if (await _appDbContext.Users.AnyAsync(u => u.Email == request.Email))
+            {
+                return BadRequest(new { message = "Este e-mail já está em uso." });
+            }
+
+            // Cria o Hash e o Salt da senha
+            CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
+
+            var newUser = new User
+            {
+                Name = request.Name,
+                Email = request.Email,
+                Birthdate = request.Birthdate,
+                PasswordHash = passwordHash, // Salva o hash
+                PasswordSalt = passwordSalt, // Salva o salt
+                CreatedAt = DateTime.UtcNow
+            };
+
+            _appDbContext.Users.Add(newUser);
+            await _appDbContext.SaveChangesAsync();
+
+            // Sucesso: Retorna os dados do novo usuário para o frontend
+            return Ok(new
+            {
+                userId = newUser.UserId,
+                name = newUser.Name,
+                email = newUser.Email
+            });
+        }
+
+        // --- Outros Endpoints (ex: GetUserProfile) ---
+        // (O restante do seu controller UsersController.cs permanece aqui...)
         [HttpGet("{id}/profile")]
         public async Task<IActionResult> GetUserProfile(int id)
         {
+             // ... (código do GetUserProfile que você já tinha)
             var userProfile = await _appDbContext.Users
                 .Where(u => u.UserId == id)
                 .Select(u => new
@@ -64,98 +131,28 @@ namespace foodboxd_backend.Controllers
             return Ok(userProfile);
         }
 
-        // GET: api/users - Busca todos os usuários
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
-        {
-            if (_appDbContext.Users == null)
-            {
-                return NotFound("Tabela de usuários (Users DbSet) não encontrada no contexto.");
-            }
+        // --- Métodos Auxiliares de Hashing ---
 
-            var users = await _appDbContext.Users.ToListAsync();
-            return Ok(users);
+        private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
+        {
+            using (var hmac = new HMACSHA512())
+            {
+                passwordSalt = hmac.Key;
+                passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+            }
         }
 
-        // POST: api/users/login - Faz login
-        [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginRequest request)
+        private bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
         {
-            var user = await _appDbContext.Users.FirstOrDefaultAsync(u =>
-                u.Email == request.Email && u.Password == request.Password);
-
-            if (user == null)
+            using (var hmac = new HMACSHA512(passwordSalt))
             {
-                return Unauthorized(new { message = "Email ou senha incorretos" });
+                var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+                return computedHash.SequenceEqual(passwordHash);
             }
-
-            return Ok(new
-            {
-                message = "Login realizado com sucesso",
-                user = new
-                {
-                    user_id = user.UserId,
-                    name = user.Name,
-                    email = user.Email
-                }
-            });
-        }
-
-        // POST: api/users/register - Cadastra um novo usuário
-        [HttpPost("create")]
-        public async Task<IActionResult> Register([FromBody] RegisterRequest request)
-        {
-            var existingUser = await _appDbContext.Users.FirstOrDefaultAsync(u => u.Email == request.Email);
-            if (existingUser != null)
-            {
-                return BadRequest(new { message = "Email já cadastrado" });
-            }
-
-            var newUser = new User
-            {
-                Name = request.Name,
-                Email = request.Email,
-                Password = request.Password,
-                CreatedAt = DateTime.UtcNow,
-                Birthdate = request.Birthdate
-            };
-
-            _appDbContext.Users.Add(newUser);
-            await _appDbContext.SaveChangesAsync();
-
-            return Ok(new
-            {
-                message = "Usuário cadastrado com sucesso",
-                user = new
-                {
-                    user_id = newUser.UserId,
-                    name = newUser.Name,
-                    email = newUser.Email
-                }
-            });
-        }
-
-        // GET: api/users/{id} - Busca um usuário específico
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetUser(int id)
-        {
-            var user = await _appDbContext.Users.FindAsync(id);
-            if (user == null)
-            {
-                return NotFound(new { message = "Usuário não encontrado" });
-            }
-
-            return Ok(new
-            {
-                userId = user.UserId,
-                name = user.Name,
-                email = user.Email,
-                createdAt = user.CreatedAt
-            });
         }
     }
 
-    // DTOs - Classes para receber dados do frontend
+    // DTOs (Data Transfer Objects)
     public class LoginRequest
     {
         public string Email { get; set; }

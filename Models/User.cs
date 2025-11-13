@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text.Json.Serialization;
 
 namespace foodboxd_backend.Models
 {
@@ -14,8 +13,11 @@ namespace foodboxd_backend.Models
         public byte[] ProfilePhoto { get; set; }
         [Required, MaxLength(100)]
         public string Email { get; set; }
-        [Required, MaxLength(30)]
-        public string Password { get; set; }
+        [JsonIgnore] 
+        public byte[] PasswordHash { get; set; }
+        [JsonIgnore] 
+        public byte[] PasswordSalt { get; set; }
+
         public string Biography { get; set; }
         [Required]
         public DateOnly Birthdate { get; set; }
