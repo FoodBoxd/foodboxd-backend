@@ -25,20 +25,18 @@ namespace foodboxd_backend.Controllers
 
             if (existingFavorite == null)
             {
-                // Favoritar
                 var newFavorite = new Favorite { UserId = request.UserId, DishId = request.DishId };
                 _appDbContext.Favorites.Add(newFavorite);
                 await _appDbContext.SaveChangesAsync();
-                
+
                 var count = await _appDbContext.Favorites.CountAsync(f => f.DishId == request.DishId);
                 return Ok(new { favorited = true, favoritesCount = count });
             }
             else
             {
-                // Desfavoritar
                 _appDbContext.Favorites.Remove(existingFavorite);
                 await _appDbContext.SaveChangesAsync();
-                
+
                 var count = await _appDbContext.Favorites.CountAsync(f => f.DishId == request.DishId);
                 return Ok(new { favorited = false, favoritesCount = count });
             }

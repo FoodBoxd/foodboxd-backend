@@ -81,12 +81,10 @@ namespace foodboxd_backend.Controllers
         {
             var userProfile = await _appDbContext.Users
                 .Where(u => u.UserId == id)
-                // --- INÍCIO DA MODIFICAÇÃO ---
-                .Include(u => u.Ratings) // Inclui as avaliações
-                    .ThenInclude(r => r.Dish) // e seus respectivos pratos
-                .Include(u => u.Favorites) // Inclui os favoritos
-                    .ThenInclude(f => f.Dish) // e seus respectivos pratos
-                // --- FIM DA MODIFICAÇÃO ---
+                .Include(u => u.Ratings)
+                    .ThenInclude(r => r.Dish)
+                .Include(u => u.Favorites)
+                    .ThenInclude(f => f.Dish)
                 .Select(u => new
                 {
                     userId = u.UserId,
@@ -115,16 +113,13 @@ namespace foodboxd_backend.Controllers
                             userScore = r.Score
                         }).ToList(),
 
-                    // --- ADICIONE ESTA NOVA SEÇÃO ---
                     favoriteDishes = u.Favorites
                         .Select(f => new
                         {
                             dishId = f.Dish.DishId,
                             dishName = f.Dish.Name,
                             dishPhoto = f.Dish.Photo
-                            // Note que não há 'userScore' aqui
                         }).ToList()
-                    // --- FIM DA ADIÇÃO ---
 
                 })
                 .FirstOrDefaultAsync();

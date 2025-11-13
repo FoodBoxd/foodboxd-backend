@@ -129,7 +129,6 @@ namespace foodboxd_backend.Controllers
 
                     favoritesCount = tb.Favorites.Count(),
                     isFavoritedByCurrentUser = tb.Favorites.Any(f => f.UserId == currentUserId)
-                    // --- FIM DAS MODIFICAÇÕES ---
                 })
                 .FirstOrDefaultAsync();
 
