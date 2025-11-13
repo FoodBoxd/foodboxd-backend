@@ -22,7 +22,7 @@ namespace foodboxd_backend.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Dish>>> GetDishes()
         {
-             if (_appDbContext.Dishes == null)
+            if (_appDbContext.Dishes == null)
             {
                 return NotFound("Tabela dishes não encontrada");
             }
@@ -77,9 +77,9 @@ namespace foodboxd_backend.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetDish(int id)
+        public async Task<IActionResult> GetDish(int id, [FromQuery] int? userId)
         {
-            int currentUserId = 1;
+            int currentUserId = userId ?? 0;
 
             var dishDetails = await _appDbContext.Dishes
                 .AsNoTracking()
