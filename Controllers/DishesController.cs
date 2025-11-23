@@ -221,5 +221,71 @@ namespace foodboxd_backend.Controllers
             public string Description { get; set; }
             public string Photo { get; set; }
         }
+
+        [HttpGet("top-rated")]
+        public async Task<IActionResult> GetTopRated()
+        {
+            var topRated = await _appDbContext.Dishes
+                .Include(d => d.Ratings)
+                .OrderByDescending(d => d.Ratings.Count())
+                .Take(10)
+                .ToListAsync();
+
+            if (topRated.Count < 10)
+            {
+                var existingIds = topRated.Select(d => d.DishId).ToList();
+                var needed = 10 - topRated.Count;
+
+                var fillers = await _appDbContext.Dishes
+                    .Where(d => !existingIds.Contains(d.DishId))
+                    .OrderBy(r => Guid.NewGuid())
+                    .Take(needed)
+                    .ToListAsync();
+
+                topRated.AddRange(fillers);
+            }
+
+            var result = topRated.Select(d => new
+            {
+                dishId = d.DishId,
+                name = d.Name,
+                photo = d.Photo
+            });
+
+            return Ok(result);
+        }
+
+        [HttpGet("top-favorited")]
+        public async Task<IActionResult> GetTopFavorited()
+        {
+            var topFavorited = await _appDbContext.Dishes
+                .Include(d => d.Favorites)
+                .OrderByDescending(d => d.Favorites.Count())
+                .Take(10)
+                .ToListAsync();
+
+            if (topFavorited.Count < 10)
+            {
+                var existingIds = topFavorited.Select(d => d.DishId).ToList();
+                var needed = 10 - topFavorited.Count;
+
+                var fillers = await _appDbContext.Dishes
+                    .Where(d => !existingIds.Contains(d.DishId))
+                    .OrderBy(r => Guid.NewGuid())
+                    .Take(needed)
+                    .ToListAsync();
+
+                topFavorited.AddRange(fillers);
+            }
+
+            var result = topFavorited.Select(d => new
+            {
+                dishId = d.DishId,
+                name = d.Name,
+                photo = d.Photo
+            });
+
+            return Ok(result);
+        }
     }
 }

@@ -139,11 +139,17 @@ namespace foodboxd_backend.Controllers
                         dishPhoto = r.Dish.Photo,
                         userScore = r.Score
                     }).ToList(),
-                    favoriteDishes = u.Favorites.Select(f => new {
-                        dishId = f.Dish.DishId,
-                        dishName = f.Dish.Name,
-                        dishPhoto = f.Dish.Photo
-                    }).ToList()
+                    favoriteDishes = u.Favorites
+                        .Select(f => new
+                        {
+                            dishId = f.Dish.DishId,
+                            dishName = f.Dish.Name,
+                            dishPhoto = f.Dish.Photo,
+                            userScore = u.Ratings
+                                .Where(r => r.DishId == f.DishId)
+                                .Select(r => (int?)r.Score)
+                                .FirstOrDefault()
+                        }).ToList()
                 })
                 .FirstOrDefaultAsync();
 
