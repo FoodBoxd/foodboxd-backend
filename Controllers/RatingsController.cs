@@ -33,8 +33,8 @@ namespace foodboxd_backend.Controllers
             else
             {
                 query = query
-                    .Include(r => r.Dish.Favorites) 
-                    .Include(r => r.Dish.Ratings) 
+                    .Include(r => r.Dish.Favorites)
+                    .Include(r => r.Dish.Ratings)
                     .OrderByDescending(r => r.Dish.Favorites.Count())
                     .ThenByDescending(r => r.Dish.Ratings.Count())
                     .ThenByDescending(r => r.CreatedAt);
@@ -104,11 +104,11 @@ namespace foodboxd_backend.Controllers
                 };
                 _appDbContext.Ratings.Add(existingRating);
             }
-            
+
             await _appDbContext.SaveChangesAsync();
 
             var user = await _appDbContext.Users.FindAsync(request.UserId);
-            
+
             return Ok(new
             {
                 ratingId = existingRating.RatingId,
