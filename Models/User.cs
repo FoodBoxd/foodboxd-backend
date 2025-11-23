@@ -10,12 +10,12 @@ namespace foodboxd_backend.Models
         public int UserId { get; set; }
         [Required, MaxLength(100)]
         public string Name { get; set; }
-        public byte[] ProfilePhoto { get; set; }
+        public string ProfilePhoto { get; set; }
         [Required, MaxLength(100)]
         public string Email { get; set; }
-        [JsonIgnore] 
+        [JsonIgnore]
         public byte[] PasswordHash { get; set; }
-        [JsonIgnore] 
+        [JsonIgnore]
         public byte[] PasswordSalt { get; set; }
 
         public string Biography { get; set; }

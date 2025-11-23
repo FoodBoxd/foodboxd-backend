@@ -76,7 +76,7 @@ namespace foodboxd_backend.Controllers
             });
         }
 
-[       HttpPut("{id}/profile")]
+        [HttpPut("{id}/profile")]
         public async Task<IActionResult> UpdateProfile(int id, [FromBody] UpdateProfileRequest request)
         {
             if (id != request.AuthUserId)
@@ -93,7 +93,8 @@ namespace foodboxd_backend.Controllers
 
             user.Name = request.Name;
             user.Biography = request.Biography;
-            // TODO: Implementar lógica de upload para ProfilePhoto se desejar
+            user.ProfilePhoto = request.ProfilePhoto; // Atualiza a foto
+            user.Birthdate = request.Birthdate;       // Atualiza a data
 
             _appDbContext.Users.Update(user);
             await _appDbContext.SaveChangesAsync();
@@ -101,7 +102,9 @@ namespace foodboxd_backend.Controllers
             return Ok(new
             {
                 name = user.Name,
-                biography = user.Biography
+                biography = user.Biography,
+                profilePhoto = user.ProfilePhoto,
+                birthdate = user.Birthdate
             });
         }
 
@@ -119,37 +122,28 @@ namespace foodboxd_backend.Controllers
                     userId = u.UserId,
                     name = u.Name,
                     biography = u.Biography,
-                    profilePhoto = u.ProfilePhoto != null ? Convert.ToBase64String(u.ProfilePhoto) : null,
+                    profilePhoto = u.ProfilePhoto,
+                    birthdate = u.Birthdate,
                     memberSince = u.CreatedAt,
-
                     stats = new
                     {
                         dishesRated = u.Ratings.Select(r => r.DishId).Distinct().Count(),
                         reviewsCount = u.Ratings.Count(),
                         averageScore = u.Ratings.Any() ? u.Ratings.Average(r => r.Score) : 0,
-
                         followers = 342,
                         following = 156
                     },
-
-                    ratedDishes = u.Ratings
-                        .OrderByDescending(r => r.CreatedAt)
-                        .Select(r => new
-                        {
-                            dishId = r.Dish.DishId,
-                            dishName = r.Dish.Name,
-                            dishPhoto = r.Dish.Photo,
-                            userScore = r.Score
-                        }).ToList(),
-
-                    favoriteDishes = u.Favorites
-                        .Select(f => new
-                        {
-                            dishId = f.Dish.DishId,
-                            dishName = f.Dish.Name,
-                            dishPhoto = f.Dish.Photo
-                        }).ToList()
-
+                    ratedDishes = u.Ratings.OrderByDescending(r => r.CreatedAt).Select(r => new {
+                        dishId = r.Dish.DishId,
+                        dishName = r.Dish.Name,
+                        dishPhoto = r.Dish.Photo,
+                        userScore = r.Score
+                    }).ToList(),
+                    favoriteDishes = u.Favorites.Select(f => new {
+                        dishId = f.Dish.DishId,
+                        dishName = f.Dish.Name,
+                        dishPhoto = f.Dish.Photo
+                    }).ToList()
                 })
                 .FirstOrDefaultAsync();
 
@@ -199,5 +193,7 @@ namespace foodboxd_backend.Controllers
         public int AuthUserId { get; set; }
         public string Name { get; set; }
         public string Biography { get; set; }
+        public string ProfilePhoto { get; set; }
+        public DateOnly Birthdate { get; set; }
     }
 }

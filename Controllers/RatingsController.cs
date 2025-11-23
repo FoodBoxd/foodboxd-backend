@@ -55,7 +55,8 @@ namespace foodboxd_backend.Controllers
                     user = new
                     {
                         userId = r.User.UserId,
-                        name = r.User.Name
+                        name = r.User.Name,
+                        profilePhoto = r.User.ProfilePhoto
                     },
                     dish = new
                     {
@@ -118,7 +119,8 @@ namespace foodboxd_backend.Controllers
                 user = new
                 {
                     userId = user.UserId,
-                    name = user?.Name ?? "Usuário"
+                    name = user?.Name ?? "Usuário",
+                    profilePhoto = user?.ProfilePhoto
                 },
                 likeCount = 0,
                 isLikedByCurrentUser = false
