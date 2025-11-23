@@ -79,9 +79,6 @@ namespace foodboxd_backend.Controllers
 [       HttpPut("{id}/profile")]
         public async Task<IActionResult> UpdateProfile(int id, [FromBody] UpdateProfileRequest request)
         {
-            // Simulação de verificação de autorização.
-            // Em um app real, o 'authUserId' viria de um Token (JWT Claim), não do body.
-            // Isso garante que um usuário só pode editar seu próprio perfil.
             if (id != request.AuthUserId)
             {
                 return Unauthorized(new { message = "Você não tem permissão para editar este perfil." });
@@ -199,8 +196,8 @@ namespace foodboxd_backend.Controllers
 
     public class UpdateProfileRequest
     {
-        public int AuthUserId { get; set; } 
+        public int AuthUserId { get; set; }
         public string Name { get; set; }
         public string Biography { get; set; }
-    }    
+    }
 }
