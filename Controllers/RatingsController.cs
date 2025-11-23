@@ -119,8 +119,33 @@ namespace foodboxd_backend.Controllers
                 {
                     userId = user.UserId,
                     name = user?.Name ?? "Usuário"
-                }
+                },
+                likeCount = 0,
+                isLikedByCurrentUser = false
             });
+        }
+
+        [HttpPost("toggle-like")]
+        public async Task<IActionResult> ToggleLike([FromBody] LikeRequest request)
+        {
+            var existingLike = await _appDbContext.RatingLikes
+                .FirstOrDefaultAsync(rl => rl.UserId == request.UserId && rl.RatingId == request.RatingId);
+
+            if (existingLike == null)
+            {
+                var newLike = new RatingLike { UserId = request.UserId, RatingId = request.RatingId };
+                _appDbContext.RatingLikes.Add(newLike);
+                await _appDbContext.SaveChangesAsync();
+                var likeCount = await _appDbContext.RatingLikes.CountAsync(rl => rl.RatingId == request.RatingId);
+                return Ok(new { liked = true, likeCount });
+            }
+            else
+            {
+                _appDbContext.RatingLikes.Remove(existingLike);
+                await _appDbContext.SaveChangesAsync();
+                var likeCount = await _appDbContext.RatingLikes.CountAsync(rl => rl.RatingId == request.RatingId);
+                return Ok(new { liked = false, likeCount });
+            }
         }
     }
 
@@ -130,5 +155,11 @@ namespace foodboxd_backend.Controllers
         public int DishId { get; set; }
         public int Score { get; set; }
         public string Comment { get; set; }
+    }
+
+    public class LikeRequest
+    {
+        public int UserId { get; set; }
+        public int RatingId { get; set; }
     }
 }
