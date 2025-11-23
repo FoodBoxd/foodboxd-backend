@@ -76,6 +76,35 @@ namespace foodboxd_backend.Controllers
             });
         }
 
+[       HttpPut("{id}/profile")]
+        public async Task<IActionResult> UpdateProfile(int id, [FromBody] UpdateProfileRequest request)
+        {
+            if (id != request.AuthUserId)
+            {
+                return Unauthorized(new { message = "Você não tem permissão para editar este perfil." });
+            }
+
+            var user = await _appDbContext.Users.FindAsync(id);
+
+            if (user == null)
+            {
+                return NotFound(new { message = "Usuário não encontrado." });
+            }
+
+            user.Name = request.Name;
+            user.Biography = request.Biography;
+            // TODO: Implementar lógica de upload para ProfilePhoto se desejar
+
+            _appDbContext.Users.Update(user);
+            await _appDbContext.SaveChangesAsync();
+
+            return Ok(new
+            {
+                name = user.Name,
+                biography = user.Biography
+            });
+        }
+
         [HttpGet("{id}/profile")]
         public async Task<IActionResult> GetUserProfile(int id)
         {
@@ -163,5 +192,12 @@ namespace foodboxd_backend.Controllers
         public string Email { get; set; }
         public string Password { get; set; }
         public DateOnly Birthdate { get; set; }
+    }
+
+    public class UpdateProfileRequest
+    {
+        public int AuthUserId { get; set; }
+        public string Name { get; set; }
+        public string Biography { get; set; }
     }
 }
