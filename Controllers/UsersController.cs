@@ -41,7 +41,8 @@ namespace foodboxd_backend.Controllers
             {
                 userId = user.UserId,
                 name = user.Name,
-                email = user.Email
+                email = user.Email,
+                profilePhoto = user.ProfilePhoto
             });
         }
 
