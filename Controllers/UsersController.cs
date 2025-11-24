@@ -94,8 +94,8 @@ namespace foodboxd_backend.Controllers
 
             user.Name = request.Name;
             user.Biography = request.Biography;
-            user.ProfilePhoto = request.ProfilePhoto; // Atualiza a foto
-            user.Birthdate = request.Birthdate;       // Atualiza a data
+            user.ProfilePhoto = request.ProfilePhoto;
+            user.Birthdate = request.Birthdate;
 
             _appDbContext.Users.Update(user);
             await _appDbContext.SaveChangesAsync();
@@ -112,56 +112,76 @@ namespace foodboxd_backend.Controllers
         [HttpGet("{id}/profile")]
         public async Task<IActionResult> GetUserProfile(int id)
         {
-            var userProfile = await _appDbContext.Users
-                .Where(u => u.UserId == id)
-                .Include(u => u.Ratings)
-                    .ThenInclude(r => r.Dish)
-                .Include(u => u.Favorites)
-                    .ThenInclude(f => f.Dish)
-                .Select(u => new
-                {
-                    userId = u.UserId,
-                    name = u.Name,
-                    biography = u.Biography,
-                    profilePhoto = u.ProfilePhoto,
-                    birthdate = u.Birthdate,
-                    memberSince = u.CreatedAt,
-                    stats = new
-                    {
-                        dishesRated = u.Ratings.Select(r => r.DishId).Distinct().Count(),
-                        reviewsCount = u.Ratings.Count(),
-                        averageScore = u.Ratings.Any() ? u.Ratings.Average(r => r.Score) : 0,
-                        followers = 342,
-                        following = 156
-                    },
-                    ratedDishes = u.Ratings.OrderByDescending(r => r.CreatedAt).Select(r => new {
-                        dishId = r.Dish.DishId,
-                        dishName = r.Dish.Name,
-                        dishPhoto = r.Dish.Photo,
-                        userScore = r.Score
-                    }).ToList(),
-                    favoriteDishes = u.Favorites
-                        .Select(f => new
-                        {
-                            dishId = f.Dish.DishId,
-                            dishName = f.Dish.Name,
-                            dishPhoto = f.Dish.Photo,
-                            userScore = u.Ratings
-                                .Where(r => r.DishId == f.DishId)
-                                .Select(r => (int?)r.Score)
-                                .FirstOrDefault()
-                        }).ToList()
-                })
-                .FirstOrDefaultAsync();
+            var user = await _appDbContext.Users
+                .AsNoTracking()
+                .FirstOrDefaultAsync(u => u.UserId == id);
 
-            if (userProfile == null)
+            if (user == null)
             {
                 return NotFound(new { message = "Perfil de usuário não encontrado" });
             }
 
-            return Ok(userProfile);
-        }
+            var allUserRatings = await _appDbContext.Ratings
+                .AsNoTracking()
+                .Where(r => r.UserId == id)
+                .Include(r => r.Dish)
+                .OrderByDescending(r => r.CreatedAt)
+                .ToListAsync();
 
+            var allUserFavorites = await _appDbContext.Favorites
+                .AsNoTracking()
+                .Where(f => f.UserId == id)
+                .Include(f => f.Dish)
+                .ToListAsync();
+
+            var distinctRatedDishes = allUserRatings
+                .GroupBy(r => r.DishId)
+                .Select(g => g.First())
+                .Select(r => new
+                {
+                    dishId = r.Dish.DishId,
+                    dishName = r.Dish.Name,
+                    dishPhoto = r.Dish.Photo,
+                    userScore = r.Score
+                })
+                .ToList();
+
+            var favoriteDishesList = allUserFavorites
+                .Select(f => new
+                {
+                    dishId = f.Dish.DishId,
+                    dishName = f.Dish.Name,
+                    dishPhoto = f.Dish.Photo,
+                    userScore = allUserRatings
+                        .FirstOrDefault(r => r.DishId == f.DishId)?
+                        .Score
+                })
+                .ToList();
+
+            var userProfileResponse = new
+            {
+                userId = user.UserId,
+                name = user.Name,
+                biography = user.Biography,
+                profilePhoto = user.ProfilePhoto,
+                birthdate = user.Birthdate,
+                memberSince = user.CreatedAt,
+
+                stats = new
+                {
+                    dishesRated = distinctRatedDishes.Count,
+                    reviewsCount = allUserRatings.Count,
+                    averageScore = allUserRatings.Any() ? allUserRatings.Average(r => r.Score) : 0,
+                    followers = 342,
+                    following = 156
+                },
+
+                ratedDishes = distinctRatedDishes,
+                favoriteDishes = favoriteDishesList
+            };
+
+            return Ok(userProfileResponse);
+        }
         private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
             using (var hmac = new HMACSHA512())
