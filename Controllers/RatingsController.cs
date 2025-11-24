@@ -84,38 +84,26 @@ namespace foodboxd_backend.Controllers
                 return BadRequest(new { message = "A nota (Score) deve ser entre 1 e 5." });
             }
 
-            var existingRating = await _appDbContext.Ratings
-                .FirstOrDefaultAsync(r => r.UserId == request.UserId && r.DishId == request.DishId);
-
-            if (existingRating != null)
+            var newRating = new Rating
             {
-                existingRating.Score = request.Score;
-                existingRating.Comment = request.Comment;
-                existingRating.CreatedAt = DateTime.UtcNow;
-                _appDbContext.Ratings.Update(existingRating);
-            }
-            else
-            {
-                existingRating = new Rating
-                {
-                    UserId = request.UserId,
-                    DishId = request.DishId,
-                    Score = request.Score,
-                    Comment = request.Comment
-                };
-                _appDbContext.Ratings.Add(existingRating);
-            }
+                UserId = request.UserId,
+                DishId = request.DishId,
+                Score = request.Score,
+                Comment = request.Comment,
+                CreatedAt = DateTime.UtcNow
+            };
 
+            _appDbContext.Ratings.Add(newRating);
             await _appDbContext.SaveChangesAsync();
 
             var user = await _appDbContext.Users.FindAsync(request.UserId);
 
             return Ok(new
             {
-                ratingId = existingRating.RatingId,
-                score = existingRating.Score,
-                comment = existingRating.Comment,
-                createdAt = existingRating.CreatedAt,
+                ratingId = newRating.RatingId,
+                score = newRating.Score,
+                comment = newRating.Comment,
+                createdAt = newRating.CreatedAt,
                 user = new
                 {
                     userId = user.UserId,
