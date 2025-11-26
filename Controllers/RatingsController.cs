@@ -35,9 +35,7 @@ namespace foodboxd_backend.Controllers
                 query = query
                     .Include(r => r.Dish.Favorites)
                     .Include(r => r.Dish.Ratings)
-                    .OrderByDescending(r => r.Dish.Favorites.Count())
-                    .ThenByDescending(r => r.Dish.Ratings.Count())
-                    .ThenByDescending(r => r.CreatedAt);
+                    .OrderByDescending(r => r.CreatedAt);
             }
 
             var totalItems = await query.CountAsync();
